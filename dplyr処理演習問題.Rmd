@@ -1,0 +1,94 @@
+---
+title: "dplyr処理演習"
+author: "22150139 中村眞雨"
+date: "2024-05-21"
+output: html_document
+---
+```{r}
+library(tidyverse)
+
+d <- data.frame(
+  name = c("太郎", "花子", "三郎", "良子", "次郎", "桜子", "四郎", "松子", "愛子"),
+  school = c("南", "南", "南", "南", "南", "東", "東", "東", "東"),
+  teacher = c("竹田", "竹田", "竹田", "竹田",  "佐藤", "佐藤", "佐藤", "鈴木", "鈴木"),
+  gender = c("男", "女", "男", "女", "男", "女", "男", "女", "女"),
+  math = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
+  reading = c(1, 5, 2, 4, 5, 4, 1, 5, 4) )
+
+library(DT)
+datatable(d)
+
+#問題１
+x1 <- d %>%
+  select(name, math)
+datatable(x1)
+
+#問題２
+x2 <- d %>%
+  select(-gender)
+datatable(x2)
+
+#問題３
+x3 <- d %>%
+  slice(3:6)
+datatable(x3)
+
+#問題４
+x4 <- d %>%
+  arrange(name)
+datatable(x4)
+
+#問題５
+x5 <- d %>%
+  arrange(desc(math))
+datatable(x5)
+
+#問題６
+x6 <- d %>%
+  arrange(desc(math), desc(reading))
+datatable(x6)
+
+#問題７
+x7 <- d %>%
+  select(name, reading)
+datatable(x7)
+
+#問題８
+x8 <- d %>%
+  summarize(mean_math = mean(math))
+datatable(x8)
+
+#問題９
+x9 <- d %>%
+  group_by(teacher) %>%
+  summarize(mean_math = mean(math))
+datatable(x9)
+
+#問題１０
+x10 <- d %>%
+  filter(gender == "女") %>%
+  select(name, math)
+datatable(x10)
+
+#問題１１
+x11 <- d %>%
+  filter(school == "南", gender == "男") %>%
+  select(name, reading)
+datatable(x11)
+
+#問題１２
+x12 <- d %>%
+  group_by(teacher) %>%
+  filter(n() >= 3)
+datatable(x12)
+
+#問題１３
+x13 <- d %>%
+  mutate(total = math + reading)
+datatable(x13)
+
+#問題１４
+x14 <- d %>%
+  mutate(math100 = math * 100 / max(math))
+datatable(x14)
+```
